@@ -1,0 +1,435 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "node_modules",
+      "extension": "dir",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 2,
+      "name": "public",
+      "extension": "dir",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": [
+        {
+          "id": 21,
+          "name": "data.json",
+          "extension": "json",
+          "parentId": 2,
+          "authLevel": 1,
+          "level": 2,
+          "children": []
+        },
+        {
+          "id": 22,
+          "name": "vite.svg",
+          "extension": "svg",
+          "parentId": 2,
+          "authLevel": 2,
+          "level": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "src",
+      "extension": "dir",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": [
+        {
+          "id": 31,
+          "name": "assets",
+          "extension": "dir",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": [
+            {
+              "id": 311,
+              "name": "bracket.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 312,
+              "name": "chevron-right.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 313,
+              "name": "css3.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 314,
+              "name": "folder-open.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 315,
+              "name": "folder.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 316,
+              "name": "github-mark.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 317,
+              "name": "html5.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 318,
+              "name": "info.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 319,
+              "name": "js.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3110,
+              "name": "menu.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3111,
+              "name": "react.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3112,
+              "name": "search.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3113,
+              "name": "sun.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3114,
+              "name": "ts.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3115,
+              "name": "user.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 3116,
+              "name": "xmark.svg",
+              "extension": "svg",
+              "parentId": 31,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "name": "components",
+          "extension": "dir",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": [
+            {
+              "id": 321,
+              "name": "Header.tsx",
+              "extension": "tsx",
+              "parentId": 32,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 322,
+              "name": "SearchBar.tsx",
+              "extension": "tsx",
+              "parentId": 32,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 323,
+              "name": "TreeView.tsx",
+              "extension": "tsx",
+              "parentId": 32,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "name": "context",
+          "extension": "dir",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": [
+            {
+              "id": 331,
+              "name": "authorization-store.tsx",
+              "extension": "tsx",
+              "parentId": 33,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 332,
+              "name": "search-store.tsx",
+              "extension": "tsx",
+              "parentId": 33,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 34,
+          "name": "hooks",
+          "extension": "dir",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": [
+            {
+              "id": 341,
+              "name": "useAuthContext.tsx",
+              "extension": "tsx",
+              "parentId": 34,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 342,
+              "name": "useClickAwayListener.tsx",
+              "extension": "tsx",
+              "parentId": 34,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 343,
+              "name": "useFetch.tsx",
+              "extension": "tsx",
+              "parentId": 34,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            },
+            {
+              "id": 344,
+              "name": "useSearchContext.tsx",
+              "extension": "tsx",
+              "parentId": 34,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "name": "types",
+          "extension": "dir",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": [
+            {
+              "id": 351,
+              "name": "index.ts",
+              "extension": "ts",
+              "parentId": 35,
+              "authLevel": 3,
+              "level": 3,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 36,
+          "name": "App.tsx",
+          "extension": "tsx",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": []
+        },
+        {
+          "id": 37,
+          "name": "index.css",
+          "extension": "css",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": []
+        },
+        {
+          "id": 38,
+          "name": "main.tsx",
+          "extension": "tsx",
+          "parentId": 3,
+          "authLevel": 2,
+          "level": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "package.json",
+      "extension": "json",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 5,
+      "name": "README.md",
+      "extension": "md",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 6,
+      "name": "index.html",
+      "extension": "html",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 7,
+      "name": "postcss.config.js",
+      "extension": "js",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 8,
+      "name": "tailwind.config.js",
+      "extension": "js",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 9,
+      "name": "tsconfig.json",
+      "extension": "json",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 10,
+      "name": "tsconfig.node.json",
+      "extension": "json",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    },
+    {
+      "id": 11,
+      "name": "vite.config.ts",
+      "extension": "ts",
+      "parentId": null,
+      "authLevel": 1,
+      "level": 1,
+      "children": []
+    }
+  ]
+}
+  
