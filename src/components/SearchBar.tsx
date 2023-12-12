@@ -10,14 +10,16 @@ interface ISearchBarProps {
   data?: IFile[];
 }
 
-function recursiveFindItem(items: IFile[], searchQuery: string): IFile | null {
-  const item = items.find((item) =>
+function recursiveFindItem(searchQuery: string, items?: IFile[]): IFile | null {
+  if(!items) return null;
+
+  const item = items?.find((item) =>
     item.name.toLowerCase().includes(searchQuery)
   );
   if (item) return item;
 
   for (const item of items) {
-    const result = recursiveFindItem(item.children, searchQuery);
+    const result = recursiveFindItem(searchQuery, item.children);
     if (result) return result;
   }
 
@@ -33,7 +35,7 @@ export const SearchBar: FC<ISearchBarProps> = ({ data }) => {
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if(searchQuery.trim().length === 0) return;
-    const item = recursiveFindItem(data!, searchQuery.trim());
+    const item = recursiveFindItem(searchQuery.trim(), data);
     if(item && item.authLevel > authLevel) return;
     setSearchItem(item);
     setIsSubmitted(true);
@@ -67,16 +69,18 @@ export const SearchBar: FC<ISearchBarProps> = ({ data }) => {
           </div>
           <input
             type="text"
-            id="default-search"
+            id="search-input"
+            data-testid="search-input"
             value={searchQuery}
             onChange={handleSearchInput}
-            name="default-search"
+            name="search-input"
             className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search file..."
             required
           />
           <button
             type="button"
+            data-testid="cancel-search-button"
             className={`absolute top-1/2 -translate-y-1/2 end-24 ${
               searchQuery ? "block" : "hidden"
             }`}
@@ -86,6 +90,7 @@ export const SearchBar: FC<ISearchBarProps> = ({ data }) => {
           </button>
           <button
             type="submit"
+            data-testid="submit-search-button"
             className="text-white absolute top-1/2 -translate-y-1/2 end-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Search
