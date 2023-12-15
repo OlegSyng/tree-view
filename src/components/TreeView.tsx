@@ -1,5 +1,4 @@
-import { FC, useEffect, useState } from "react";
-import { IFile, ExtensionType } from "../types";
+import { FC } from "react";
 import ChevronRightIcon from "../assets/chevron-right.svg?react";
 import FolderIcon from "../assets/folder.svg?react";
 import FolderOpenIcon from "../assets/folder-open.svg?react";
@@ -11,119 +10,62 @@ import TsIcon from "../assets/ts.svg?react";
 import BracketIcon from "../assets/bracket.svg?react";
 import SvgIcon from "../assets/sun.svg?react";
 import InfoIcon from "../assets/info.svg?react";
-import { useSearchContext } from "../hooks/useSearchContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { File, Directory } from "../types";
+import { useParentControl } from "../hooks/useParentControl";
 
 interface ITreeViewProps {
-  data: IFile;
+  data: File | Directory;
 }
 
-const renderIcon = (extension: ExtensionType, isOpenFolder: boolean) => {
-  let icon = null;
-  switch (extension) {
-    case "dir":
-      icon = isOpenFolder ? (
-        <FolderOpenIcon className="w-4 h-4 text-slate-500" />
-      ) : (
-        <FolderIcon className="w-4 h-4" />
-      );
-      break;
-    case "css":
-      icon = <CssIcon className="w-4 h-4" />;
-      break;
-    case "html":
-      icon = <HtmlIcon className="w-4 h-4" />;
-      break;
-    case "js":
-      icon = <JsIcon className="w-4 h-4" />;
-      break;
-    case "tsx":
-      icon = <ReactIcon className="w-4 h-4" />;
-      break;
-    case "ts":
-      icon = <TsIcon className="w-4 h-4" />;
-      break;
-    case "json":
-      icon = <BracketIcon className="w-4 h-4" />;
-      break;
-    case "svg":
-      icon = <SvgIcon className="w-4 h-4" />;
-      break;
-    case "md":
-      icon = <InfoIcon className="w-4 h-4" />;
-      break;
-    default:
-      icon = null;
-      break;
-  }
-  return icon;
-};
-
-function renderDropDownIcon(children: IFile[], auth: number) {
-  let isRender = false;
-  for (const child of children) {
-    if (child.authLevel <= auth) {
-      isRender = true;
-      break;
-    }
-  }
-  return isRender 
+const fileIcon = {
+  css: CssIcon,
+  html: HtmlIcon,
+  js: JsIcon,
+  tsx: ReactIcon,
+  ts: TsIcon,
+  json: BracketIcon,
+  svg: SvgIcon,
+  md: InfoIcon
 }
 
 export const TreeView: FC<ITreeViewProps> = ({ data }) => {
-  const [isOpenFolder, setIsOpenFolder] = useState(false);
-  const { searchItem } = useSearchContext()
   const { authLevel } = useAuthContext()
-
-  useEffect(() => {
-    function recursiveOpenFolder(searchFile: IFile) {
-      const isDirectChild = data.children.some((child) => child.name === searchFile.name);
-      if (isDirectChild) {
-        setIsOpenFolder(true);
-        return
-      }
-      for (const child of data.children) {
-        if (child.children  .length) {
-          recursiveOpenFolder(child);
-        }
-      }
-    }
-    if (searchItem) {
-      recursiveOpenFolder(searchItem);
-    }
-  }, [searchItem, data]);
- 
-  if (!data || data.authLevel > authLevel) return null;
+  const { ref, isOpen, setIsOpen, isEmpty, isSearchItem } = useParentControl(false, data.name)
 
   function handleClickOpenFolder() {
-    setIsOpenFolder((prev) => !prev);
+    setIsOpen((prev) => !prev);
   }
 
-  const isSearchItem = searchItem?.name === data.name;
+  const isFile = Boolean('extension' in data);
+  const isDirectory = Boolean('children' in data);
+ 
+
+  const Icon = isFile && fileIcon[(data as File).extension] || InfoIcon;
+  const DirectoryIcon = isOpen ? FolderOpenIcon : FolderIcon;
+
+  if ((data.authLevel !== 'guest' && authLevel === 'guest' && data.authLevel === 'user') ||
+      (data.authLevel !== 'guest' && authLevel === 'user' && data.authLevel === 'admin' ) ) return null;
 
   return (
-    <li className={`flex items-center flex-wrap space-x-3 ${isSearchItem && 'bg-slate-100'}`}>
-      {renderDropDownIcon(data.children, authLevel) ? (
-        <button
-          type="button"
-          onClick={handleClickOpenFolder}
-          className="p-1.5 rounded-full hover:bg-slate-100 focus:ring-1 focus:outline-none focus:ring-slate-200"
-        >
-          <ChevronRightIcon
-            className={`w-3 h-3 transition-transform ${
-              isOpenFolder && "rotate-90"
-            }`}
-          />
-        </button>
-      ) : (
-        <span className="w-6 h-6"></span>
-      )}
-      {renderIcon(data.extension, isOpenFolder)}
-      <span>{data.name}</span>
-      {isOpenFolder && (
-        <ul className="w-full space-y-2 py-2 text-left text-gray-500 dark:text-gray-400">
-          {data.children.map((file) => (
-            <TreeView key={file.id} data={file} />
+    <li className={`flex items-center flex-wrap space-x-3 ${isSearchItem ? 'bg-slate-100' : ''}`}>
+      {isDirectory && !isEmpty ? <button
+        type="button"
+        onClick={handleClickOpenFolder}
+        className="p-1.5 rounded-full hover:bg-slate-100 focus:ring-1 focus:outline-none focus:ring-slate-200"
+      >
+        <ChevronRightIcon
+          className={`w-3 h-3 transition-transform ${
+            isOpen ? "rotate-90" : ''
+          }`}
+        />
+      </button> : <span className="w-6 h-6" />}
+      {isFile ? <Icon className="w-4 h-4" /> : <DirectoryIcon className="w-4 h-4" />}
+      <span>{data.name}</span> 
+      {isDirectory && (
+        <ul ref={ref} className={`w-full space-y-2 py-2 text-left text-gray-500 dark:text-gray-400 ${isOpen ? 'block' : 'hidden'}`}>
+          {(data as Directory).children.map((item) => (
+            <TreeView key={item.id} data={item} />
           ))}
         </ul>
       )}

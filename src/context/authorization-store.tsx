@@ -8,12 +8,12 @@ interface IAuthorizationContext {
 }
 
 export const AuthContext: Context<IAuthorizationContext> = createContext<IAuthorizationContext>({
-  authLevel: 1,
+  authLevel: 'admin',
   setAuthLevel: () => {},
 })
 
 export function AuthContextProvider({ children }: PropsWithChildren) {
-  const [authLevel, setAuthLevel] = useState<AuthLevel>(3)
+  const [authLevel, setAuthLevel] = useState<AuthLevel>('admin')
 
   const authContextValue: IAuthorizationContext = useMemo(
     () => ({ authLevel, setAuthLevel}),

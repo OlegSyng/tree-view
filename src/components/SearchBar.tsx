@@ -1,58 +1,33 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useSearchContext } from "../hooks/useSearchContext";
-import { useAuthContext } from "../hooks/useAuthContext";
 import SearchIcon from "../assets/search.svg?react";
 import XMarkIcon from "../assets/xmark.svg?react";
 import InfoIcon from "../assets/info.svg?react";
-import { IFile } from "../types";
 
-interface ISearchBarProps {
-  data?: IFile[];
-}
-
-function recursiveFindItem(searchQuery: string, items?: IFile[]): IFile | null {
-  if(!items) return null;
-
-  const item = items?.find((item) =>
-    item.name.toLowerCase().includes(searchQuery)
-  );
-  if (item) return item;
-
-  for (const item of items) {
-    const result = recursiveFindItem(searchQuery, item.children);
-    if (result) return result;
-  }
-
-  return null;
-}
-
-export const SearchBar: FC<ISearchBarProps> = ({ data }) => {
-  const { searchItem, setSearchItem } = useSearchContext();
+export const SearchBar = () => {
+  const { search, setSearch, hasResult, setHasResult } = useSearchContext();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const {authLevel} = useAuthContext();
 
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if(searchQuery.trim().length === 0) return;
-    const item = recursiveFindItem(searchQuery.trim(), data);
-    if(item && item.authLevel > authLevel) return;
-    setSearchItem(item);
+    setSearch(searchQuery.trim().toLowerCase());
     setIsSubmitted(true);
   }
 
   function handleSearchInput(event: ChangeEvent<HTMLInputElement>) {
-    const searchQuery = event.target.value;
-    setSearchQuery(searchQuery.toLowerCase());
+    setSearchQuery(event.target.value);
   }
 
   function handleResetSearch() {
-    setSearchItem(null);
+    setSearch(null);
+    setHasResult(false);
     setSearchQuery("");
     setIsSubmitted(false);
   }
 
-  const showNotification = isSubmitted && !searchItem;
+  const showNotification = isSubmitted && !!search && !hasResult;
 
   return (
     <>
@@ -69,7 +44,6 @@ export const SearchBar: FC<ISearchBarProps> = ({ data }) => {
           </div>
           <input
             type="text"
-            id="search-input"
             data-testid="search-input"
             value={searchQuery}
             onChange={handleSearchInput}

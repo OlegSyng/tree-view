@@ -1,23 +1,29 @@
-import { useState, useMemo, createContext, PropsWithChildren, Context } from 'react'
-import { IFile } from '../types'
+import { useState, useMemo, createContext } from 'react'
+import type { PropsWithChildren, Context, Dispatch, SetStateAction } from 'react'
+import { Nullable } from '../types'
 
 
 interface ISearchContext {
-    searchItem: IFile | null
-    setSearchItem: (item: IFile | null) => void
+    search: Nullable<string>
+    hasResult: boolean
+    setSearch: Dispatch<SetStateAction<Nullable<string>>>
+    setHasResult: Dispatch<SetStateAction<boolean>>
 }
 
 export const SearchContext: Context<ISearchContext> = createContext<ISearchContext>({
-  searchItem: null,
-  setSearchItem: () => {},
+  search: null,
+  hasResult: false,
+  setSearch: () => {},
+  setHasResult: () => {}
 })
 
 export function SearchContextProvider({ children }: PropsWithChildren) {
-  const [searchItem, setSearchItem] = useState<IFile | null>(null)
+  const [search, setSearch] = useState<Nullable<string>>(null)
+  const [hasResult, setHasResult] = useState<boolean>(false)
 
   const searchContextValue: ISearchContext = useMemo(
-    () => ({ searchItem, setSearchItem}),
-    [searchItem]
+    () => ({ search, setSearch, hasResult, setHasResult}),
+    [search, hasResult]
   )
 
   return (

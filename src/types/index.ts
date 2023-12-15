@@ -1,17 +1,27 @@
-export type AuthLevel = 1 | 2 | 3;
+export type AuthLevel = 'admin' | 'user' | 'guest';
 
-export type ExtensionType = 'dir' | 'svg' | 'tsx' | 'css' | 'ts' | 'js' | 'json' | 'html' | 'md';
+export type ExtensionType = 'svg' | 'tsx' | 'css' | 'ts' | 'js' | 'json' | 'html' | 'md';
 
-export interface IFile {
+type DocumentBase  = {
     id: number;
     name: string;
-    extension: ExtensionType;
     parentId: number | null;
     authLevel: AuthLevel;
     level: number;
-    children: IFile[];
 }
 
-export type IFileData = {
-    items : IFile[];
+export interface File extends DocumentBase {
+    extension: ExtensionType;
 }
+
+export interface Directory extends DocumentBase {
+    children: DataItems;
+}
+
+export type DataItems = (File | Directory)[];
+
+export type Data = {
+    items : DataItems
+}
+
+export type Nullable<T> = T | null;
