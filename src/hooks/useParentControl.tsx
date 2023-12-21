@@ -1,35 +1,40 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSearchContext } from "./useSearchContext";
+import { useAuthContext } from "./useAuthContext";
+import { authPermitsHandler, recursiveSearch } from "../utils";
+import { File, Directory, DocumentType } from "../types";
 
-export const useParentControl = (initialIsOpen: boolean, name: string) => {
+
+
+
+export const useParentControl = (initialIsOpen: boolean, data: File | Directory) => {
+  const { authLevel } = useAuthContext()  
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const [isEmpty, setIsEmpty] = useState(true);
   const { search,  setHasResult } = useSearchContext()
-  const ref = useRef<HTMLUListElement>(null);
 
-  const isSearchItem = !!search && name.toLowerCase().includes(search);
+  const isSearchItem = !!search && data.name.toLowerCase().includes(search);
+  const docType: DocumentType = 'extension' in data ? 'file' : 'children' in data ? 'directory' : 'unknown'
+  const isAuthPermitted = authPermitsHandler(authLevel, data);
 
   useEffect(() => {
-    if(isSearchItem) {
+    if(!authPermitsHandler(authLevel, data)) return;
+    if(isSearchItem) setHasResult(true);
+    if( docType === 'directory' && (data as Directory).children.length) {
+      setIsEmpty(false)
+      
+      if(search && !isSearchItem && recursiveSearch(data as Directory, search, authLevel)) {
+        setIsOpen(true);
         setHasResult(true);
+      }
     }
-  }, [isSearchItem, setHasResult])
+  }, [search, data, docType, isSearchItem, setHasResult, authLevel]);
 
-  useEffect(() => {
-    if (ref.current && ref.current.hasChildNodes()) {
-        setIsEmpty(false);
-    }  
-    if (search && ref.current && ref.current.hasChildNodes()) {
-        for (const child of ref.current.childNodes) {
-            if(child.textContent?.toLowerCase().includes(search)) {
-                setIsOpen(true);
-                setHasResult(true);
-                break;
-            } 
-        }
-    }
-
-  }, [ref, search,isSearchItem, setHasResult]);
-
-  return { ref, isOpen, setIsOpen, isEmpty, isSearchItem };
+  return { 
+    isOpen, 
+    setIsOpen, 
+    isEmpty, 
+    isSearchItem: isAuthPermitted && isSearchItem,
+    docType
+  };
 };

@@ -24,4 +24,6 @@ export type Data = {
     items : DataItems
 }
 
+export type DocumentType = 'file' | 'directory' | 'unknown';
+
 export type Nullable<T> = T | null;
